@@ -66,7 +66,7 @@ println(user.first!)
 ...
 ```
 
-As long as your model object implements the ```JSONSerializable``` protocol and it's required methods of ```init``` and ```map```, the ```JsonSZ``` class should be able to serialize and deserialize your objects to JSON. The library supports all the primitive types including arrays and dictionaries plus relationship between the objects (as shown by the User, Address example above). Head over to our [unit tests](https://github.com/aerogear/aerogear-ios-jsonsz/blob/master/AeroGearJsonSZTests/AeroGearJsonSZTests.swift) for more examples usage.
+As long as your model object implements the ```JSONSerializable``` protocol and its required methods of ```init``` and ```map```, the ```JsonSZ``` class should be able to serialize and deserialize your objects to JSON. The library supports all the primitive types including arrays and dictionaries plus relationship between the objects (as shown by the User, Address example above). Head over to our [unit tests](https://github.com/aerogear/aerogear-ios-jsonsz/blob/master/AeroGearJsonSZTests/AeroGearJsonSZTests.swift) for more examples usage.
 
 Give it a go and let us know if it does help you on your projects!
 
@@ -83,16 +83,16 @@ Last, we would like to give appreciation and credit to the existing serializatio
 To add the library in your project, you can either use [Cocoapods](http://cocoapods.org) or simply drag the library in your project. See the respective sections below for instructions
 
 ### Using [Cocoapods](http://cocoapods.org)
-At this time, Cocoapods support for Swift frameworks is supported in a preview [branch](https://github.com/CocoaPods/CocoaPods/tree/swift) but tests shown that it's pretty stable to use. Simply [include a Gemfile](http://swiftwala.com/cocoapods-is-ready-for-swift/) in your project pointing to that branch and in your ```Podfile``` add:
+At this time, Cocoapods support for Swift frameworks is supported in a [pre-release](http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/). In your ```Podfile``` add:
 
 ```
 pod 'AeroGearJsonSZ'
 ```
 
 and then:
+
 ```bash
-bundle install
-bundle exec pod install
+pod install
 ```
 
 to install your dependencies

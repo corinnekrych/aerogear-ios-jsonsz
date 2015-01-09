@@ -111,56 +111,8 @@ git submodule add https://github.com/aerogear/aerogear-ios-jsonsz.git
 ```
 2. Open the `aerogear-ios-jsonsz` folder, and drag the `AeroGearJsonSZ.xcodeproj` into the file navigator in Xcode.
 3. In Xcode select your application target  and under the "Targets" heading section, ensure that the 'iOS  Deployment Target'  matches the application target of AeroGearJsonSZ.framework (Currently set to 8.0).
-5. Select the  "Build Phases"  heading section,  expand the "Target Dependencies" group and add  `AGURLSessionStubs.framework`.
+5. Select the  "Build Phases"  heading section,  expand the "Target Dependencies" group and add  `AeroGearJsonSZ.framework`.
 7. Click on the `+` button at the top left of the panel and select "New Copy Files Phase". Rename this new phase to "Copy Frameworks", set the "Destination" to "Frameworks", and add `AeroGearJsonSZ.framework`.
-
-
-If you run into any problems, please [file an issue](http://issues.jboss.org/browse/AEROGEAR) and/or ask our [user mailing list](https://lists.jboss.org/mailman/listinfo/aerogear-users). You can also join our [dev mailing list](https://lists.jboss.org/mailman/listinfo/aerogear-dev).  
-
-
--------------
-## Build, test and play with aerogear-ios-jsonsz
-
-1. Clone this project
-
-3. open AeroGearJsonSZ.xcodeproj
-
-## Adding the library to your project 
-To add the library in your project, you can either use [Cocoapods](http://cocoapods.org) or simply drag the library in your project. See the respective sections below for instructions
-
-### Using [Cocoapods](http://cocoapods.org)
-At this time, Cocoapods support for Swift frameworks is supported in a [pre-release](http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/). In your ```Podfile``` add:
-
-```
-pod 'AeroGearJsonSZ'
-```
-
-and then:
-
-```bash
-pod install
-```
-
-to install your dependencies
-
-### Drag the library in your project
-
-Follow these steps to add the library in your Swift project.
-
-1. [Clone this repository](#1-clone-this-repository)
-2. [Add `AeroGearJsonSZ.xcodeproj` to your application target](#2-add-aerogearjsonsz-xcodeproj-to-your-application-target)
-3. Start writing your app!
-
-#### 1. Clone this repository
-
-```
-git clone git@github.com:aerogear/aerogear-ios-jsonsz.git
-```
-
-#### 2. Add `AeroGearJsonSZ.xcodeproj` to your application target
-
-Right-click on the group containing your application target and select `Add Files To YourApp`
-Next, select `AeroGearJsonSZ.xcodeproj`, which you downloaded in step 1.
 
 
 If you run into any problems, please [file an issue](http://issues.jboss.org/browse/AEROGEAR) and/or ask our [user mailing list](https://lists.jboss.org/mailman/listinfo/aerogear-users). You can also join our [dev mailing list](https://lists.jboss.org/mailman/listinfo/aerogear-dev).  

@@ -72,18 +72,6 @@ Give it a go and let us know if it does help you on your projects!
 
 Last, we would like to give appreciation and credit to the existing serialization libraries of [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) and [SwiftMapper](https://github.com/kam800/SwiftMapper) for giving us an initial bootstrap and ideas to base our development of this library. Thank you guys!
 
-### Build, test and play with aerogear-ios-jsonsz
-
-1. Clone this project
-
-2. Get the dependencies
-
-The project uses [cocoapods](http://cocoapods.org) 0.36.0 pre-release for handling its dependencies. As a pre-requisite, install [cocoapods pre-release](http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/) and then install the pod. On the root directory of the project run:
-```bash
-pod install
-```
-3. open AeroGearJsonSZ.xcworkspace
-
 ## Adding the library to your project 
 To add the library in your project, you can either use [Cocoapods](http://cocoapods.org) or manual install in your project. See the respective sections below for instructions:
 

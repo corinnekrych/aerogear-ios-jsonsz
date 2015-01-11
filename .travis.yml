@@ -4,13 +4,6 @@ xcode_project: AeroGearJsonSZ.xcodeproj
 xcode_scheme: AeroGearJsonSZ
 xcode_sdk: iphonesimulator
 
-before_install:
-    - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
-
-script:
-    - set -o pipefail && xcodebuild -workspace AeroGearJsonSZ.xcworkspace -scheme AeroGearJsonSZ -sdk iphonesimulator -configuration Release clean test
-
-
 notifications:
   irc: "irc.freenode.org#aerogear"
 

@@ -18,12 +18,12 @@
 import Foundation
 
 /**
-A class must implement this protocol to signal that is JSON serializable
+A class must implement this protocol to signal that is JSON serializable.
 */
 public protocol JSONSerializable {
     
     /**
-    A default constructor
+    A default constructor.
     */
     init()
     
@@ -45,7 +45,7 @@ enum Operation {
 }
 
 /**
-Main class that provides convenient methods for serializing/deserializing from/to JSON structures
+Main class that provides convenient methods for serializing/deserializing from/to JSON structures.
 */
 public class JsonSZ {
     var values: [String:  AnyObject] = [:]
@@ -67,7 +67,7 @@ public class JsonSZ {
     }
     
     /**
-    Deserialize from JSON
+    Deserialize from JSON.
     
     :param: JSON      the JSON structure
     :param: type        the type of the object to be constructed
@@ -89,12 +89,12 @@ public class JsonSZ {
     }
     
     /**
-    Deserialize from JSON Array
+    Deserialize from JSON Array.
     
-    :param: JSON      the top-level JSON array that wraps the objects
-    :param: type        the type of the object to be constructed
+    :param: JSON      the top-level JSON array that wraps the objects.
+    :param: type        the type of the object to be constructed.
     
-    :returns: the array of objects initialized from the JSON structure
+    :returns: the array of objects initialized from the JSON structure.
     */
     public func fromJSONArray<N: JSONSerializable>(JSON: AnyObject,  to type: N.Type) -> [N]? {
         if let string = JSON as? String {
@@ -119,12 +119,12 @@ public class JsonSZ {
     }
     
     /**
-    Serialize type to JSON
+    Serialize type to JSON.
     
-    :param: object     a JSONSerializable object from which JSON would be constructed
-    :param: type        the type of the object to be constructed
+    :param: object     a JSONSerializable object from which JSON would be constructed.
+    :param: type        the type of the object to be constructed.
     
-    :returns: the array of objects initialized from the JSON structure
+    :returns: the array of objects initialized from the JSON structure.
     */
     public func toJSON<N: JSONSerializable>(object: N) -> [String:  AnyObject] {
         operation = .toJSON
@@ -135,8 +135,12 @@ public class JsonSZ {
         return self.values
     }
 }
+/**
+Serialize/Deserialize to cover primitive types.
 
-// primitive types
+:param: left      inout serialized object of type T.
+:param: right     JsonSZ object to hold json structure.
+*/
 public func <=<T>(inout left: T?, right: JsonSZ) {
     if right.operation == .fromJSON {
         FromJSON<T>().primitiveType(&left, value: right.value)
@@ -145,7 +149,12 @@ public func <=<T>(inout left: T?, right: JsonSZ) {
     }
 }
 
-// object types
+/**
+Serialize/Deserialize to cover object types.
+
+:param: left      inout serialized object of type T.
+:param: right     JsonSZ object to hold json structure.
+*/
 public func <=<T: JSONSerializable>(inout left: T?, right: JsonSZ) {
     if right.operation == .fromJSON {
         FromJSON<T>().objectType(&left, value: right.value)
@@ -154,7 +163,12 @@ public func <=<T: JSONSerializable>(inout left: T?, right: JsonSZ) {
     }
 }
 
-// array
+/**
+Serialize/Deserialize to cover array types.
+
+:param: left      inout serialized object of type [T].
+:param: right     JsonSZ object to hold json structure.
+*/
 public func <=<T: JSONSerializable>(inout left: [T]?, right: JsonSZ) {
     if right.operation == .fromJSON {
         FromJSON<T>().arrayType(&left, value: right.value)
@@ -163,7 +177,12 @@ public func <=<T: JSONSerializable>(inout left: [T]?, right: JsonSZ) {
     }
 }
 
-// array primitives
+/**
+Serialize/Deserialize to cover array primitive types.
+
+:param: left      inout serialized object of type [AnyObject]?.
+:param: right     JsonSZ object to hold json structure.
+*/
 public func <=(inout left: [AnyObject]?, right: JsonSZ) {
     if right.operation == .fromJSON {
         FromJSON<AnyObject>().primitiveType(&left, value: right.value)
@@ -172,7 +191,12 @@ public func <=(inout left: [AnyObject]?, right: JsonSZ) {
     }
 }
 
-// dictionary
+/**
+Serialize/Deserialize to cover array dictionary types.
+
+:param: left      inout serialized object of type [String:  T]?.
+:param: right     JsonSZ object to hold json structure.
+*/
 public func <=<T: JSONSerializable>(inout left: [String:  T]?, right: JsonSZ) {
     if right.operation == .fromJSON {
         FromJSON<T>().dictionaryType(&left, value: right.value)
@@ -181,7 +205,12 @@ public func <=<T: JSONSerializable>(inout left: [String:  T]?, right: JsonSZ) {
     }
 }
 
-// dictionary primitives
+/**
+Serialize/Deserialize to cover array dictionary primitives.
+
+:param: left      inout serialized object of type [String:  T]?.
+:param: right     JsonSZ object to hold json structure.
+*/
 public func <=(inout left: [String:  AnyObject]?, right: JsonSZ) {
     if right.operation == .fromJSON {
         FromJSON<AnyObject>().primitiveType(&left, value: right.value)

@@ -19,7 +19,7 @@ import AeroGearJsonSZ
 
 class Address: JSONSerializable {
 
-    var street: String?
+    var street: String = ""
     var poBox: Int?
     var city: String?
     var country: String?
@@ -37,7 +37,7 @@ class Address: JSONSerializable {
 class Contributor: JSONSerializable {
     
     var id: Int?
-    var firstname: String?
+    var firstname: String = "Default"
     var lastname: String?
     var title: String?
     var age: Double?

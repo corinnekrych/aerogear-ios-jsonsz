@@ -33,6 +33,25 @@ class AeroGearJsonSZTests: XCTestCase {
         super.tearDown()
     }
     
+    func testJSONToObjectModelWithioutNonOptionalFirstnameShouldReturnDefaut() {
+        var contributorJSON = ["id": 100, "lastname": "Doe", "title": "Software Engineer", "age": 40, "committer": true, "weight": 60.2, "githubReposList":["foo", "bar"], "dictionary": ["foo": "bar"]]
+        
+        // serialize from json
+        let contributor:Contributor = self.serializer.fromJSON(contributorJSON, to: Contributor.self)
+        
+        // assert construction has succeeded on primitive fields
+        XCTAssertTrue(contributor.id == 100)
+        XCTAssertTrue(contributor.firstname == "Default")
+        XCTAssertTrue(contributor.lastname == "Doe")
+        XCTAssertTrue(contributor.title == "Software Engineer")
+        XCTAssertTrue(contributor.age == 40)
+        XCTAssertTrue(contributor.committer == true)
+        XCTAssertTrue(contributor.weight ==     60.2)
+        XCTAssertTrue(contributor.githubReposList?.count == 2)
+        XCTAssertTrue(contributor.dictionary?.count == 1)
+        
+    }
+    
     func testJSONToObjectModelWithPrimitiveAttributes() {
         var contributorJSON = ["id": 100, "firstname": "John", "lastname": "Doe", "title": "Software Engineer", "age": 40, "committer": true, "weight": 60.2, "githubReposList":["foo", "bar"], "dictionary": ["foo": "bar"]]
         
@@ -88,7 +107,6 @@ class AeroGearJsonSZTests: XCTestCase {
         
         // assert construction has succeeded and missing values are nil
         XCTAssertTrue(contributor.id == 100)
-        XCTAssertTrue(contributor.firstname == nil)
         XCTAssertTrue(contributor.lastname == nil)
         XCTAssertTrue(contributor.title == "Software Engineer")
         XCTAssertTrue(contributor.age == nil)
@@ -107,7 +125,6 @@ class AeroGearJsonSZTests: XCTestCase {
         
         // assert json dictionary has been populated
         XCTAssertTrue(json["id"] as? Int == 100)
-        XCTAssertTrue(json["firstname"] == nil)
         XCTAssertTrue(json["lastname"] == nil)
         XCTAssertTrue(json["title"] as? String == "Software Engineer")
         XCTAssertTrue(json["age"]  == nil)

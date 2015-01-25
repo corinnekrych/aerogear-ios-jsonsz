@@ -143,17 +143,17 @@ Serialize/Deserialize to cover primitive types.
 */
 public func <=<T>(inout left: T?, right: JsonSZ) {
     if right.operation == .fromJSON {
-        FromJSON<T>().primitiveType(&left, value: right.value)
+        fromJsonToPrimitiveType(&left, right.value)
     } else {
-        ToJSON().primitiveType(left, key: right.key!, dictionary: &right.values)
+        toJsonFomPrimitiveType(left, right.key!, &right.values)
     }
 }
 
 public func <=<T>(inout left: T, right: JsonSZ) {
     if right.operation == .fromJSON {
-        FromJSON<T>().primitiveType(&left, value: right.value)
+        fromJsonToPrimitiveType(&left, right.value)
     } else {
-        ToJSON().primitiveType(left, key: right.key!, dictionary: &right.values)
+        toJsonFomPrimitiveType(left, right.key!, &right.values)
     }
 }
 
@@ -165,17 +165,17 @@ Serialize/Deserialize to cover object types.
 */
 public func <=<T: JSONSerializable>(inout left: T?, right: JsonSZ) {
     if right.operation == .fromJSON {
-        FromJSON<T>().objectType(&left, value: right.value)
+        fromJsonToObjectType(&left, right.value)
     } else {
-        ToJSON().objectType(left, key: right.key!, dictionary: &right.values)
+        toJsonFomObjectType(left, right.key!, &right.values)
     }
 }
 
 public func <=<T: JSONSerializable>(inout left: T, right: JsonSZ) {
     if right.operation == .fromJSON {
-        FromJSON<T>().objectType(&left, value: right.value)
+        fromJsonToObjectType(&left, right.value)
     } else {
-        ToJSON().objectType(left, key: right.key!, dictionary: &right.values)
+        toJsonFomObjectType(left, right.key!, &right.values)
     }
 }
 
@@ -187,17 +187,17 @@ Serialize/Deserialize to cover array types.
 */
 public func <=<T: JSONSerializable>(inout left: [T]?, right: JsonSZ) {
     if right.operation == .fromJSON {
-        FromJSON<T>().arrayType(&left, value: right.value)
+        fromJsonToArrayType(&left, right.value)
     } else {
-        ToJSON().arrayType(left, key: right.key!, dictionary: &right.values)
+        toJsonFomArrayType(left, right.key!, &right.values)
     }
 }
 
 public func <=<T: JSONSerializable>(inout left: [T], right: JsonSZ) {
     if right.operation == .fromJSON {
-        FromJSON<T>().arrayType(&left, value: right.value)
+        fromJsonToArrayType(&left, right.value)
     } else {
-        ToJSON().arrayType(left, key: right.key!, dictionary: &right.values)
+        toJsonFomArrayType(left, right.key!, &right.values)
     }
 }
 
@@ -209,16 +209,16 @@ Serialize/Deserialize to cover array primitive types.
 */
 public func <=(inout left: [AnyObject]?, right: JsonSZ) {
     if right.operation == .fromJSON {
-        FromJSON<AnyObject>().primitiveType(&left, value: right.value)
+        fromJsonToPrimitiveType(&left, right.value)
     } else {
-        ToJSON().arrayType(left, key: right.key!, dictionary: &right.values)
+        toJsonFomArrayType(left, right.key!, &right.values)
     }
 }
 public func <=(inout left: [AnyObject], right: JsonSZ) {
     if right.operation == .fromJSON {
-        FromJSON<AnyObject>().primitiveType(&left, value: right.value)
+        fromJsonToPrimitiveType(&left, right.value)
     } else {
-        ToJSON().arrayType(left, key: right.key!, dictionary: &right.values)
+        toJsonFomArrayType(left, right.key!, &right.values)
     }
 }
 
@@ -230,17 +230,17 @@ Serialize/Deserialize to cover array dictionary types.
 */
 public func <=<T: JSONSerializable>(inout left: [String:  T]?, right: JsonSZ) {
     if right.operation == .fromJSON {
-        FromJSON<T>().dictionaryType(&left, value: right.value)
+        fromJsonToDictionaryType(&left, right.value)
     } else {
-        ToJSON().dictionaryType(left, key: right.key!, dictionary: &right.values)
+        toJsonFomDictionaryType(left, right.key!, &right.values)
     }
 }
 
 public func <=<T: JSONSerializable>(inout left: [String:  T], right: JsonSZ) {
     if right.operation == .fromJSON {
-        FromJSON<T>().dictionaryType(&left, value: right.value)
+        fromJsonToDictionaryType(&left, right.value)
     } else {
-        ToJSON().dictionaryType(left, key: right.key!, dictionary: &right.values)
+        toJsonFomDictionaryType(left, right.key!, &right.values)
     }
 }
 
@@ -252,207 +252,208 @@ Serialize/Deserialize to cover array dictionary primitives.
 */
 public func <=(inout left: [String:  AnyObject]?, right: JsonSZ) {
     if right.operation == .fromJSON {
-        FromJSON<AnyObject>().primitiveType(&left, value: right.value)
+        fromJsonToPrimitiveType(&left, right.value)
     } else {
-        ToJSON().dictionaryType(left, key: right.key!, dictionary: &right.values)
+        toJsonFomDictionaryType(left, right.key!, &right.values)
     }
 }
 
 public func <=(inout left: [String:  AnyObject], right: JsonSZ) {
     if right.operation == .fromJSON {
-        FromJSON<AnyObject>().primitiveType(&left, value: right.value)
+        fromJsonToPrimitiveType(&left, right.value)
     } else {
-        ToJSON().dictionaryType(left, key: right.key!, dictionary: &right.values)
+        toJsonFomDictionaryType(left, right.key!, &right.values)
     }
 }
 
-class FromJSON<CollectionType> {
-    
-    func primitiveType<FieldType>(inout field: FieldType?, value: AnyObject?) {
-        if let value: AnyObject = value {
-            switch FieldType.self {
-            case is String.Type:
-                field = value as? FieldType
-            case is Bool.Type:
-                field = value as? FieldType
-            case is Int.Type:
-                field = value as? FieldType
-            case is Double.Type:
-                field = value as? FieldType
-            case is Float.Type:
-                field = value as? FieldType
-            case is Array<CollectionType>.Type:
-                field = value as? FieldType
-            case is Dictionary<String, CollectionType>.Type:
-                field = value as? FieldType
-            case is NSDate.Type:
-                field = value as? FieldType
-            default:
-                field = nil
-                return
-            }
-        }
-    }
-    func primitiveType<FieldType>(inout field: FieldType, value: AnyObject?) {
-        if let value: AnyObject = value {
-            switch FieldType.self {
-            case is String.Type:
-                field = value as FieldType
-            case is Bool.Type:
-                field = value as FieldType
-            case is Int.Type:
-                field = value as FieldType
-            case is Double.Type:
-                field = value as FieldType
-            case is Float.Type:
-                field = value as FieldType
-            case is Array<CollectionType>.Type:
-                field = value as FieldType
-            case is Dictionary<String, CollectionType>.Type:
-                field = value as FieldType
-            case is NSDate.Type:
-                field = value as FieldType
-            default:
-                return
-            }
-        }
-    }
 
-    func objectType<N: JSONSerializable>(inout field: N?, value: AnyObject?) {
-        if let value = value as? [String:  AnyObject] {
-            field = JsonSZ().fromJSON(value, to: N.self)
+
+func fromJsonToPrimitiveType<N>(inout field: N?, value: AnyObject?) {
+    if let value: AnyObject = value {
+        switch N.self {
+        case is String.Type:
+            field = value as? N
+        case is Bool.Type:
+            field = value as? N
+        case is Int.Type:
+            field = value as? N
+        case is Double.Type:
+            field = value as? N
+        case is Float.Type:
+            field = value as? N
+        case is Array<AnyObject>.Type:
+            field = value as? N
+        case is Dictionary<String, AnyObject>.Type:
+            field = value as? N
+        case is NSDate.Type:
+            field = value as? N
+        default:
+            field = nil
+            return
         }
     }
-    func objectType<N: JSONSerializable>(inout field: N, value: AnyObject?) {
-        if let value = value as? [String:  AnyObject] {
-            field = JsonSZ().fromJSON(value, to: N.self)
+}
+
+func fromJsonToPrimitiveType<FieldType>(inout field: FieldType, value: AnyObject?) {
+    if let value: AnyObject = value {
+        switch FieldType.self {
+        case is String.Type:
+            field = value as FieldType
+        case is Bool.Type:
+            field = value as FieldType
+        case is Int.Type:
+            field = value as FieldType
+        case is Double.Type:
+            field = value as FieldType
+        case is Float.Type:
+            field = value as FieldType
+        case is Array<AnyObject>.Type:
+            field = value as FieldType
+        case is Dictionary<String, AnyObject>.Type:
+            field = value as FieldType
+        case is NSDate.Type:
+            field = value as FieldType
+        default:
+            return
+        }
+    }
+}
+
+// Mark - Utilities functions
+
+func fromJsonToObjectType<N: JSONSerializable>(inout field: N?, value: AnyObject?) {
+    if let value = value as? [String:  AnyObject] {
+        field = JsonSZ().fromJSON(value, to: N.self)
+    }
+}
+func fromJsonToObjectType<N: JSONSerializable>(inout field: N, value: AnyObject?) {
+    if let value = value as? [String:  AnyObject] {
+        field = JsonSZ().fromJSON(value, to: N.self)
+    }
+}
+
+func fromJsonToArrayType<N: JSONSerializable>(inout field: [N]?, value: AnyObject?) {
+    let serializer = JsonSZ()
+    
+    var objects = [N]()
+    
+    if let array = value as [AnyObject]? {
+        for object in array {
+            var object = serializer.fromJSON(object as [String: AnyObject],  to: N.self)
+            objects.append(object)
         }
     }
     
-    func arrayType<N: JSONSerializable>(inout field: [N]?, value: AnyObject?) {
-        let serializer = JsonSZ()
+    field = objects.count > 0 ? objects: nil
+}
+
+func fromJsonToArrayType<N: JSONSerializable>(inout field: [N], value: AnyObject?) {
+    let serializer = JsonSZ()
+    
+    var objects = [N]()
+    
+    if let array = value as [AnyObject]? {
+        for object in array {
+            var object = serializer.fromJSON(object as [String: AnyObject],  to: N.self)
+            objects.append(object)
+        }
+    }
+    
+    field = objects.count > 0 ? objects: []
+}
+
+func fromJsonToDictionaryType<N: JSONSerializable>(inout field: [String: N]?, value: AnyObject?) {
+    let serializer = JsonSZ()
+    
+    if let dictionary = value as? [String: AnyObject] {
+        var objects = [String: N]()
         
-        var objects = [N]()
-
-        if let array = value as [AnyObject]? {
-            for object in array {
-                var object = serializer.fromJSON(object as [String: AnyObject],  to: N.self)
-                objects.append(object)
-            }
+        for (key, object) in dictionary {
+            var object = serializer.fromJSON(object as [String:  AnyObject], to: N.self)
+            objects[key] = object
         }
         
         field = objects.count > 0 ? objects: nil
     }
-    func arrayType<N: JSONSerializable>(inout field: [N], value: AnyObject?) {
-        let serializer = JsonSZ()
-        
-        var objects = [N]()
-        
-        if let array = value as [AnyObject]? {
-            for object in array {
-                var object = serializer.fromJSON(object as [String: AnyObject],  to: N.self)
-                objects.append(object)
-            }
-        }
-        
-        field = objects.count > 0 ? objects: []
-    }
-        
-    func dictionaryType<N: JSONSerializable>(inout field: [String: N]?, value: AnyObject?) {
-        let serializer = JsonSZ()
-        
-        if let dictionary = value as? [String: AnyObject] {
-            var objects = [String: N]()
-            
-            for (key, object) in dictionary {
-                var object = serializer.fromJSON(object as [String:  AnyObject], to: N.self)
-                objects[key] = object
-            }
+}
 
-            field = objects.count > 0 ? objects: nil
-        }
-    }
-    func dictionaryType<N: JSONSerializable>(inout field: [String: N], value: AnyObject?) {
-        let serializer = JsonSZ()
+func fromJsonToDictionaryType<N: JSONSerializable>(inout field: [String: N], value: AnyObject?) {
+    let serializer = JsonSZ()
+    
+    if let dictionary = value as? [String: AnyObject] {
+        var objects = [String: N]()
         
-        if let dictionary = value as? [String: AnyObject] {
-            var objects = [String: N]()
-            
-            for (key, object) in dictionary {
-                var object = serializer.fromJSON(object as [String:  AnyObject], to: N.self)
-                objects[key] = object
-            }
-            
-            field = objects.count > 0 ? objects: [:]
+        for (key, object) in dictionary {
+            var object = serializer.fromJSON(object as [String:  AnyObject], to: N.self)
+            objects[key] = object
+        }
+        
+        field = objects.count > 0 ? objects: [:]
+    }
+}
+
+func toJsonFomPrimitiveType<N>(field: N?, key: String, inout dictionary: [String : AnyObject]) {
+    if let field: N = field {
+        switch N.self {
+        case is Bool.Type:
+            dictionary[key] = field as Bool
+        case is Int.Type:
+            dictionary[key] = field as Int
+        case is Double.Type:
+            dictionary[key] = field as Double
+        case is Float.Type:
+            dictionary[key] = field as Float
+        case is String.Type:
+            dictionary[key] = field as String
+        default:
+            return
         }
     }
 }
 
-class ToJSON {
-
-    func primitiveType<N>(field: N?, key: String, inout dictionary: [String : AnyObject]) {
-        if let field: N = field {
-            switch N.self {
-            case is Bool.Type:
-                dictionary[key] = field as Bool
-            case is Int.Type:
-                dictionary[key] = field as Int
-            case is Double.Type:
-                dictionary[key] = field as Double
-            case is Float.Type:
-                dictionary[key] = field as Float
-            case is String.Type:
-                dictionary[key] = field as String
-            default:
-                return
-            }
-        }
+func toJsonFomObjectType<N: JSONSerializable>(field: N?, key: String, inout dictionary: [String : AnyObject]) {
+    if let field = field {
+        dictionary[key] = NSDictionary(dictionary: JsonSZ().toJSON(field))
     }
-    
-    func objectType<N: JSONSerializable>(field: N?, key: String, inout dictionary: [String : AnyObject]) {
-        if let field = field {
-            dictionary[key] = NSDictionary(dictionary: JsonSZ().toJSON(field))
-        }
-    }
-    
-    func arrayType<N: JSONSerializable>(field: [N]?, key: String, inout dictionary: [String : AnyObject]) {
-        if let field = field {
-            var objects = NSMutableArray()
-            
-            for object in field {
-                objects.addObject(JsonSZ().toJSON(object))
-            }
-            
-            if objects.count > 0 {
-                dictionary[key] = objects
-            }
-        }
-    }
-    
-   func arrayType(field: [AnyObject]?, key: String, inout dictionary: [String : AnyObject]) {
-        if let value = field {
-            dictionary[key] = NSArray(array: value)
-        }
-    }
-    
-    func dictionaryType<N: JSONSerializable>(field: [String: N]?, key: String, inout dictionary: [String : AnyObject]) {
-        if let field = field {
-            var objects = NSMutableDictionary()
-            
-            for (key, object) in field {
-                objects.setObject(JsonSZ().toJSON(object), forKey: key)
-            }
-            
-            if objects.count > 0 {
-                dictionary[key] = objects
-            }
-        }
-    }
-    
-    func dictionaryType(field: [String: AnyObject]?, key: String, inout dictionary: [String : AnyObject]) {
-        if let value = field {
-            dictionary[key] = NSDictionary(dictionary: value)
-        }
-    }
-    
 }
+
+func toJsonFomArrayType<N: JSONSerializable>(field: [N]?, key: String, inout dictionary: [String : AnyObject]) {
+    if let field = field {
+        var objects = NSMutableArray()
+        
+        for object in field {
+            objects.addObject(JsonSZ().toJSON(object))
+        }
+        
+        if objects.count > 0 {
+            dictionary[key] = objects
+        }
+    }
+}
+
+func toJsonFomArrayType(field: [AnyObject]?, key: String, inout dictionary: [String : AnyObject]) {
+    if let value = field {
+        dictionary[key] = NSArray(array: value)
+    }
+}
+
+func toJsonFomDictionaryType<N: JSONSerializable>(field: [String: N]?, key: String, inout dictionary: [String : AnyObject]) {
+    if let field = field {
+        var objects = NSMutableDictionary()
+        
+        for (key, object) in field {
+            objects.setObject(JsonSZ().toJSON(object), forKey: key)
+        }
+        
+        if objects.count > 0 {
+            dictionary[key] = objects
+        }
+    }
+}
+
+func toJsonFomDictionaryType(field: [String: AnyObject]?, key: String, inout dictionary: [String : AnyObject]) {
+    if let value = field {
+        dictionary[key] = NSDictionary(dictionary: value)
+    }
+}
+

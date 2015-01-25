@@ -17,8 +17,7 @@
 
 import AeroGearJsonSZ
 
-class Address: JSONSerializable {
-
+class Address: FromJsonSerializable, ToJsonSerializable {
     var street: String?
     var poBox: Int?
     var city: String?
@@ -26,16 +25,22 @@ class Address: JSONSerializable {
     
     required init() {}
     
-    class func map(source: JsonSZ, object: Address) {
-        object.street <= source["street"]
-        object.poBox <= source["poBox"]
-        object.city <= source["city"]
-        object.country <= source["country"]
+    class func fromJson(json: Serializer, to object: Address) {
+        object.street <= json["street"]
+        object.poBox <= json["poBox"]
+        object.city <= json["city"]
+        object.country <= json["country"]
+    }
+
+    class func toJson(json: Serializer, from object: Address) {
+        object.street => json["street"]
+        object.poBox => json["poBox"]
+        object.city => json["city"]
+        object.country => json["country"]
     }
 }
 
-class Contributor: JSONSerializable {
-    
+class Contributor: FromJsonSerializable, ToJsonSerializable {
     var id: Int?
     var firstname: String?
     var lastname: String?
@@ -44,34 +49,51 @@ class Contributor: JSONSerializable {
     var committer: Bool?
     var weight: Float?
     var githubReposList:[AnyObject]?
-    var dictionary:[String: AnyObject]?
-    
+    var dictionary:[String: AnyObject]?    
     var address: Address?
     
     required init() {}
     
-    class func map(source: JsonSZ, object: Contributor) {
-        object.id <= source["id"]
-        object.firstname <= source["firstname"]
-        object.lastname <= source["lastname"]
-        object.title <= source["title"]
-        object.age <= source["age"]
-        object.committer <= source["committer"]
-        object.weight <= source["weight"]
-        object.githubReposList <= source["githubReposList"]
-        object.dictionary <= source["dictionary"]
-        object.address <= source["address"]
+    class func fromJson(json: Serializer, to object: Contributor) {
+        object.id <= json["id"]
+        object.firstname <= json["firstname"]
+        object.lastname <= json["lastname"]
+        object.title <= json["title"]
+        object.age <= json["age"]
+        object.committer <= json["committer"]
+        object.weight <= json["weight"]
+        object.githubReposList <= json["githubReposList"]
+        object.dictionary <= json["dictionary"]
+        object.address <= json["address"]
+    }
+    
+    class func toJson(json: Serializer, from object: Contributor) {
+        object.id => json["id"]
+        object.firstname => json["firstname"]
+        object.lastname => json["lastname"]
+        object.title => json["title"]
+        object.age => json["age"]
+        object.committer => json["committer"]
+        object.weight => json["weight"]
+        object.githubReposList => json["githubReposList"]
+        object.dictionary => json["dictionary"]
+        object.address => json["address"]
     }
 }
 
-class Team: JSONSerializable {
+class Team: FromJsonSerializable, ToJsonSerializable {
     var name: String?
     var contributors: [Contributor]?
     
     required init() {}
     
-    class func map(source: JsonSZ, object: Team) {
-        object.name <= source["name"]
-        object.contributors <= source["contributors"]
+    class func fromJson(json: Serializer, to object: Team) {
+        object.name <= json["name"]
+        object.contributors <= json["contributors"]
+    }
+    
+    class func toJson(json: Serializer, from object: Team) {
+        object.name => json["name"]
+        object.contributors => json["contributors"]
     }
 }

@@ -49,10 +49,8 @@ Main class that provides convenient methods for serializing/deserializing from/t
 */
 public class JsonSZ {
     var values: [String:  AnyObject] = [:]
-
     var key: String?
     var value: AnyObject?
-    
     var operation: Operation = .fromJSON
     
     public init() {}
@@ -114,7 +112,6 @@ public class JsonSZ {
                 }
             }
         }
-
         return nil
     }
     
@@ -135,6 +132,7 @@ public class JsonSZ {
         return self.values
     }
 }
+
 /**
 Serialize/Deserialize to cover primitive types.
 
@@ -142,19 +140,11 @@ Serialize/Deserialize to cover primitive types.
 :param: right     JsonSZ object to hold json structure.
 */
 public func <=<T>(inout left: T?, right: JsonSZ) {
-    if right.operation == .fromJSON {
-        fromJsonToPrimitiveType(&left, right.value)
-    } else {
-        toJsonFomPrimitiveType(left, right.key!, &right.values)
-    }
+    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFomPrimitiveType)
 }
 
 public func <=<T>(inout left: T, right: JsonSZ) {
-    if right.operation == .fromJSON {
-        fromJsonToPrimitiveType(&left, right.value)
-    } else {
-        toJsonFomPrimitiveType(left, right.key!, &right.values)
-    }
+    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFomPrimitiveType)
 }
 
 /**
@@ -164,20 +154,13 @@ Serialize/Deserialize to cover object types.
 :param: right     JsonSZ object to hold json structure.
 */
 public func <=<T: JSONSerializable>(inout left: T?, right: JsonSZ) {
-    if right.operation == .fromJSON {
-        fromJsonToObjectType(&left, right.value)
-    } else {
-        toJsonFomObjectType(left, right.key!, &right.values)
-    }
+    conditionalFunctionCall(&left, right, fromJsonToObjectType, toJsonFomObjectType)
 }
 
 public func <=<T: JSONSerializable>(inout left: T, right: JsonSZ) {
-    if right.operation == .fromJSON {
-        fromJsonToObjectType(&left, right.value)
-    } else {
-        toJsonFomObjectType(left, right.key!, &right.values)
-    }
+    conditionalFunctionCall(&left, right, fromJsonToObjectType, toJsonFomObjectType)
 }
+
 
 /**
 Serialize/Deserialize to cover array types.
@@ -186,19 +169,11 @@ Serialize/Deserialize to cover array types.
 :param: right     JsonSZ object to hold json structure.
 */
 public func <=<T: JSONSerializable>(inout left: [T]?, right: JsonSZ) {
-    if right.operation == .fromJSON {
-        fromJsonToArrayType(&left, right.value)
-    } else {
-        toJsonFomArrayType(left, right.key!, &right.values)
-    }
+    conditionalFunctionCall(&left, right, fromJsonToArrayType, toJsonFomArrayType)
 }
 
 public func <=<T: JSONSerializable>(inout left: [T], right: JsonSZ) {
-    if right.operation == .fromJSON {
-        fromJsonToArrayType(&left, right.value)
-    } else {
-        toJsonFomArrayType(left, right.key!, &right.values)
-    }
+    conditionalFunctionCall(&left, right, fromJsonToArrayType, toJsonFomArrayType)
 }
 
 /**
@@ -208,18 +183,11 @@ Serialize/Deserialize to cover array primitive types.
 :param: right     JsonSZ object to hold json structure.
 */
 public func <=(inout left: [AnyObject]?, right: JsonSZ) {
-    if right.operation == .fromJSON {
-        fromJsonToPrimitiveType(&left, right.value)
-    } else {
-        toJsonFomArrayType(left, right.key!, &right.values)
-    }
+    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFomArrayType)
 }
+
 public func <=(inout left: [AnyObject], right: JsonSZ) {
-    if right.operation == .fromJSON {
-        fromJsonToPrimitiveType(&left, right.value)
-    } else {
-        toJsonFomArrayType(left, right.key!, &right.values)
-    }
+    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFomArrayType)
 }
 
 /**
@@ -229,19 +197,11 @@ Serialize/Deserialize to cover array dictionary types.
 :param: right     JsonSZ object to hold json structure.
 */
 public func <=<T: JSONSerializable>(inout left: [String:  T]?, right: JsonSZ) {
-    if right.operation == .fromJSON {
-        fromJsonToDictionaryType(&left, right.value)
-    } else {
-        toJsonFomDictionaryType(left, right.key!, &right.values)
-    }
+    conditionalFunctionCall(&left, right, fromJsonToDictionaryType, toJsonFomDictionaryType)
 }
 
 public func <=<T: JSONSerializable>(inout left: [String:  T], right: JsonSZ) {
-    if right.operation == .fromJSON {
-        fromJsonToDictionaryType(&left, right.value)
-    } else {
-        toJsonFomDictionaryType(left, right.key!, &right.values)
-    }
+    conditionalFunctionCall(&left, right, fromJsonToDictionaryType, toJsonFomDictionaryType)
 }
 
 /**
@@ -251,22 +211,22 @@ Serialize/Deserialize to cover array dictionary primitives.
 :param: right     JsonSZ object to hold json structure.
 */
 public func <=(inout left: [String:  AnyObject]?, right: JsonSZ) {
-    if right.operation == .fromJSON {
-        fromJsonToPrimitiveType(&left, right.value)
-    } else {
-        toJsonFomDictionaryType(left, right.key!, &right.values)
-    }
+    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFomDictionaryType)
 }
 
 public func <=(inout left: [String:  AnyObject], right: JsonSZ) {
-    if right.operation == .fromJSON {
-        fromJsonToPrimitiveType(&left, right.value)
-    } else {
-        toJsonFomDictionaryType(left, right.key!, &right.values)
-    }
+    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFomDictionaryType)
 }
 
+// Mark - Utilities functions
 
+func conditionalFunctionCall<A>(inout left: A, right: JsonSZ, fromJson: (inout A, AnyObject?)->(), toJson: (A, String, inout [String:  AnyObject])->()) {
+    if right.operation == .fromJSON {
+        fromJson(&left, right.value)
+    } else {
+        toJson(left, right.key!, &right.values)
+    }
+}
 
 func fromJsonToPrimitiveType<N>(inout field: N?, value: AnyObject?) {
     if let value: AnyObject = value {
@@ -294,32 +254,30 @@ func fromJsonToPrimitiveType<N>(inout field: N?, value: AnyObject?) {
     }
 }
 
-func fromJsonToPrimitiveType<FieldType>(inout field: FieldType, value: AnyObject?) {
+func fromJsonToPrimitiveType<N>(inout field: N, value: AnyObject?) {
     if let value: AnyObject = value {
-        switch FieldType.self {
+        switch N.self {
         case is String.Type:
-            field = value as FieldType
+            field = value as N
         case is Bool.Type:
-            field = value as FieldType
+            field = value as N
         case is Int.Type:
-            field = value as FieldType
+            field = value as N
         case is Double.Type:
-            field = value as FieldType
+            field = value as N
         case is Float.Type:
-            field = value as FieldType
+            field = value as N
         case is Array<AnyObject>.Type:
-            field = value as FieldType
+            field = value as N
         case is Dictionary<String, AnyObject>.Type:
-            field = value as FieldType
+            field = value as N
         case is NSDate.Type:
-            field = value as FieldType
+            field = value as N
         default:
             return
         }
     }
 }
-
-// Mark - Utilities functions
 
 func fromJsonToObjectType<N: JSONSerializable>(inout field: N?, value: AnyObject?) {
     if let value = value as? [String:  AnyObject] {

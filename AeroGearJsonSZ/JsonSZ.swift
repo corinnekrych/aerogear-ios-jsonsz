@@ -317,7 +317,7 @@ func fromJsonToArrayType<N: JSONSerializable>(inout field: [N], value: AnyObject
         }
     }
     
-    field = objects.count > 0 ? objects: []
+    field = objects
 }
 
 func fromJsonToDictionaryType<N: JSONSerializable>(inout field: [String: N]?, value: AnyObject?) {
@@ -346,7 +346,7 @@ func fromJsonToDictionaryType<N: JSONSerializable>(inout field: [String: N], val
             objects[key] = object
         }
         
-        field = objects.count > 0 ? objects: [:]
+        field = objects
     }
 }
 

@@ -140,11 +140,11 @@ Serialize/Deserialize to cover primitive types.
 :param: right     JsonSZ object to hold json structure.
 */
 public func <=<T>(inout left: T?, right: JsonSZ) {
-    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFomPrimitiveType)
+    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFromPrimitiveType)
 }
 
 public func <=<T>(inout left: T, right: JsonSZ) {
-    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFomPrimitiveType)
+    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFromPrimitiveType)
 }
 
 /**
@@ -154,11 +154,11 @@ Serialize/Deserialize to cover object types.
 :param: right     JsonSZ object to hold json structure.
 */
 public func <=<T: JSONSerializable>(inout left: T?, right: JsonSZ) {
-    conditionalFunctionCall(&left, right, fromJsonToObjectType, toJsonFomObjectType)
+    conditionalFunctionCall(&left, right, fromJsonToObjectType, toJsonFromObjectType)
 }
 
 public func <=<T: JSONSerializable>(inout left: T, right: JsonSZ) {
-    conditionalFunctionCall(&left, right, fromJsonToObjectType, toJsonFomObjectType)
+    conditionalFunctionCall(&left, right, fromJsonToObjectType, toJsonFromObjectType)
 }
 
 
@@ -169,11 +169,11 @@ Serialize/Deserialize to cover array types.
 :param: right     JsonSZ object to hold json structure.
 */
 public func <=<T: JSONSerializable>(inout left: [T]?, right: JsonSZ) {
-    conditionalFunctionCall(&left, right, fromJsonToArrayType, toJsonFomArrayType)
+    conditionalFunctionCall(&left, right, fromJsonToArrayType, toJsonFromArrayType)
 }
 
 public func <=<T: JSONSerializable>(inout left: [T], right: JsonSZ) {
-    conditionalFunctionCall(&left, right, fromJsonToArrayType, toJsonFomArrayType)
+    conditionalFunctionCall(&left, right, fromJsonToArrayType, toJsonFromArrayType)
 }
 
 /**
@@ -183,11 +183,11 @@ Serialize/Deserialize to cover array primitive types.
 :param: right     JsonSZ object to hold json structure.
 */
 public func <=(inout left: [AnyObject]?, right: JsonSZ) {
-    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFomArrayType)
+    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFromArrayType)
 }
 
 public func <=(inout left: [AnyObject], right: JsonSZ) {
-    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFomArrayType)
+    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFromArrayType)
 }
 
 /**
@@ -197,11 +197,11 @@ Serialize/Deserialize to cover array dictionary types.
 :param: right     JsonSZ object to hold json structure.
 */
 public func <=<T: JSONSerializable>(inout left: [String:  T]?, right: JsonSZ) {
-    conditionalFunctionCall(&left, right, fromJsonToDictionaryType, toJsonFomDictionaryType)
+    conditionalFunctionCall(&left, right, fromJsonToDictionaryType, toJsonFromDictionaryType)
 }
 
 public func <=<T: JSONSerializable>(inout left: [String:  T], right: JsonSZ) {
-    conditionalFunctionCall(&left, right, fromJsonToDictionaryType, toJsonFomDictionaryType)
+    conditionalFunctionCall(&left, right, fromJsonToDictionaryType, toJsonFromDictionaryType)
 }
 
 /**
@@ -211,11 +211,11 @@ Serialize/Deserialize to cover array dictionary primitives.
 :param: right     JsonSZ object to hold json structure.
 */
 public func <=(inout left: [String:  AnyObject]?, right: JsonSZ) {
-    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFomDictionaryType)
+    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFromDictionaryType)
 }
 
 public func <=(inout left: [String:  AnyObject], right: JsonSZ) {
-    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFomDictionaryType)
+    conditionalFunctionCall(&left, right, fromJsonToPrimitiveType, toJsonFromDictionaryType)
 }
 
 // Mark - Utilities functions
@@ -350,7 +350,7 @@ func fromJsonToDictionaryType<N: JSONSerializable>(inout field: [String: N], val
     }
 }
 
-func toJsonFomPrimitiveType<N>(field: N?, key: String, inout dictionary: [String : AnyObject]) {
+func toJsonFromPrimitiveType<N>(field: N?, key: String, inout dictionary: [String : AnyObject]) {
     if let field: N = field {
         switch N.self {
         case is Bool.Type:
@@ -369,13 +369,13 @@ func toJsonFomPrimitiveType<N>(field: N?, key: String, inout dictionary: [String
     }
 }
 
-func toJsonFomObjectType<N: JSONSerializable>(field: N?, key: String, inout dictionary: [String : AnyObject]) {
+func toJsonFromObjectType<N: JSONSerializable>(field: N?, key: String, inout dictionary: [String : AnyObject]) {
     if let field = field {
         dictionary[key] = NSDictionary(dictionary: JsonSZ().toJSON(field))
     }
 }
 
-func toJsonFomArrayType<N: JSONSerializable>(field: [N]?, key: String, inout dictionary: [String : AnyObject]) {
+func toJsonFromArrayType<N: JSONSerializable>(field: [N]?, key: String, inout dictionary: [String : AnyObject]) {
     if let field = field {
         var objects = NSMutableArray()
         
@@ -389,13 +389,13 @@ func toJsonFomArrayType<N: JSONSerializable>(field: [N]?, key: String, inout dic
     }
 }
 
-func toJsonFomArrayType(field: [AnyObject]?, key: String, inout dictionary: [String : AnyObject]) {
+func toJsonFromArrayType(field: [AnyObject]?, key: String, inout dictionary: [String : AnyObject]) {
     if let value = field {
         dictionary[key] = NSArray(array: value)
     }
 }
 
-func toJsonFomDictionaryType<N: JSONSerializable>(field: [String: N]?, key: String, inout dictionary: [String : AnyObject]) {
+func toJsonFromDictionaryType<N: JSONSerializable>(field: [String: N]?, key: String, inout dictionary: [String : AnyObject]) {
     if let field = field {
         var objects = NSMutableDictionary()
         
@@ -409,7 +409,7 @@ func toJsonFomDictionaryType<N: JSONSerializable>(field: [String: N]?, key: Stri
     }
 }
 
-func toJsonFomDictionaryType(field: [String: AnyObject]?, key: String, inout dictionary: [String : AnyObject]) {
+func toJsonFromDictionaryType(field: [String: AnyObject]?, key: String, inout dictionary: [String : AnyObject]) {
     if let value = field {
         dictionary[key] = NSDictionary(dictionary: value)
     }

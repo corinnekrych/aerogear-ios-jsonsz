@@ -18,8 +18,8 @@
 import AeroGearJsonSZ
 
 class Address: JSONSerializable {
-
-    var street: String = ""
+    
+    var street: String?
     var poBox: Int?
     var city: String?
     var country: String?
@@ -37,7 +37,7 @@ class Address: JSONSerializable {
 class Contributor: JSONSerializable {
     
     var id: Int?
-    var firstname: String = "Default"
+    var firstname: String?
     var lastname: String?
     var title: String?
     var age: Double?
@@ -73,5 +73,48 @@ class Team: JSONSerializable {
     class func map(source: JsonSZ, object: Team) {
         object.name <= source["name"]
         object.contributors <= source["contributors"]
+    }
+}
+
+
+class Developer: JSONSerializable {
+    var id: Int
+    var firstname: String
+    var lastname: String
+    var title: String
+    var age: Double
+    var committer: Bool
+    var weight: Float
+    var githubReposList:[AnyObject]
+    var dictionary:[String: AnyObject]
+    
+    var address: Address
+    
+    required init() {
+        // put some defaults to satisfy swift object construction (not used)
+        id = 0
+        firstname = ""
+        lastname = ""
+        title = ""
+        age = 0
+        committer = false
+        weight = 0
+        githubReposList = ["null", "null"]
+        dictionary = ["null" : "null"]
+        let addr = Address()
+        address = addr
+    }
+    
+    class func map(source: JsonSZ, object: Developer) {
+        object.id <= source["id"]
+        object.firstname <= source["firstname"]
+        object.lastname <= source["lastname"]
+        object.title <= source["title"]
+        object.age <= source["age"]
+        object.committer <= source["committer"]
+        object.weight <= source["weight"]
+        object.githubReposList <= source["githubReposList"]
+        object.dictionary <= source["dictionary"]
+        object.address <= source["address"]
     }
 }

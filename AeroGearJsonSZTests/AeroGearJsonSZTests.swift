@@ -33,6 +33,67 @@ class AeroGearJsonSZTests: XCTestCase {
         super.tearDown()
     }
     
+    func testJsonToObjectModelOptionalDictionnaryOfPrimitives() {
+        var json = ["dictStringString":["string": "string"], "dictStringBool":["string": false], "dictStringInt":["string": 1], "dictStringDouble":["string": 1.1], "dictStringFloat":["string": 1.2]]
+        // serialize from json
+        let testSet: TestCollectionOfPrimitives = self.serializer.fromJSON(json, to: TestCollectionOfPrimitives.self)
+
+        XCTAssertTrue(testSet.dictStringString?.count == 1)
+        XCTAssertTrue(testSet.dictStringInt?.count == 1)
+        XCTAssertTrue(testSet.dictStringBool?.count == 1)
+        XCTAssertTrue(testSet.dictStringDouble?.count == 1)
+        XCTAssertTrue(testSet.dictStringFloat?.count == 1)
+    }
+    
+    func testObjectToModelOptionalDictionnaryOfPrimitives() {
+        var object = TestCollectionOfPrimitives()
+        object.dictStringString = ["string": "string"]
+        object.dictStringBool = ["string": false]
+        object.dictStringInt = ["string": 1]
+        object.dictStringDouble = ["string": 1.2]
+        object.dictStringFloat = ["string": 1.3]
+        //var json = ["dictStringString":["string": "string"], "dictStringBool":["string": false], "dictStringInt":["string": 1], "dictStringDouble":["string": 1.1], "dictStringFloat":["string": 1.2]]
+        let json = self.serializer.toJSON(object)
+        println(":::\(json)")
+        XCTAssertTrue((json["dictStringString"] as [String:String]).count == 1)
+    }
+    
+    func testJsonToObjectModelOptionalArrayOfPrimitives() {
+        var json = ["arrayString":["string", "string"], "arrayBool":[true, false], "arrayInt":[1, 2], "arrayDouble":[1.1, 1.2], "arrayFloat":[1.2, 1.3]]
+        // serialize from json
+        let testSet: TestCollectionOfPrimitives = self.serializer.fromJSON(json, to: TestCollectionOfPrimitives.self)
+
+        XCTAssertTrue(testSet.arrayString?.count == 2)
+        XCTAssertTrue(testSet.arrayInt?.count == 2)
+        XCTAssertTrue(testSet.arrayBool?.count == 2)
+        XCTAssertTrue(testSet.arrayDouble?.count == 2)
+        XCTAssertTrue(testSet.arrayFloat?.count == 2)
+    }
+    
+    func testJsonToObjectModelNonOptionalDictionnaryOfPrimitives() {
+        var json = ["dictStringString":["string": "string"], "dictStringBool":["string": false], "dictStringInt":["string": 1], "dictStringDouble":["string": 1.1], "dictStringFloat":["string": 1.2]]
+        // serialize from json
+        let testSet: TestCollectionOfPrimitivesNonOptional = self.serializer.fromJSON(json, to: TestCollectionOfPrimitivesNonOptional.self)
+        
+        XCTAssertTrue(testSet.dictStringString.count == 1)
+        XCTAssertTrue(testSet.dictStringInt.count == 1)
+        XCTAssertTrue(testSet.dictStringBool.count == 1)
+        XCTAssertTrue(testSet.dictStringDouble.count == 1)
+        XCTAssertTrue(testSet.dictStringFloat.count == 1)
+    }
+    
+    func testJsonToObjectModelNonOptionalArrayOfPrimitives() {
+        var json = ["arrayString":["string", "string"], "arrayBool":[true, false], "arrayInt":[1, 2], "arrayDouble":[1.1, 1.2], "arrayFloat":[1.2, 1.3]]
+        // serialize from json
+        let testSet: TestCollectionOfPrimitivesNonOptional = self.serializer.fromJSON(json, to: TestCollectionOfPrimitivesNonOptional.self)
+        
+        XCTAssertTrue(testSet.arrayString.count == 2)
+        XCTAssertTrue(testSet.arrayInt.count == 2)
+        XCTAssertTrue(testSet.arrayBool.count == 2)
+        XCTAssertTrue(testSet.arrayDouble.count == 2)
+        XCTAssertTrue(testSet.arrayFloat.count == 2)
+    }
+
     func testJSONToObjectModelWithPrimitiveAttributes() {
         var contributorJSON = ["id": 100, "firstname": "John", "lastname": "Doe", "title": "Software Engineer", "age": 40, "committer": true, "weight": 60.2, "githubReposList":["foo", "bar"], "dictionary": ["foo": "bar"]]
         

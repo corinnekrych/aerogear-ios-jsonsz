@@ -231,19 +231,15 @@ func conditionalFunctionCall<A>(inout left: A, right: JsonSZ, fromJson: (inout A
 func fromJsonToPrimitiveType<N>(inout field: N?, value: AnyObject?) {
     if let value: AnyObject = value {
         switch N.self {
-        case is String.Type:
-            field = value as? N
-        case is Bool.Type:
-            field = value as? N
-        case is Int.Type:
-            field = value as? N
-        case is Double.Type:
-            field = value as? N
-        case is Float.Type:
+        case is String.Type, is Bool.Type, is Int.Type, is Double.Type, is Float.Type:
             field = value as? N
         case is Array<AnyObject>.Type:
             field = value as? N
+        case is Array<String>.Type, is Array<Bool>.Type, is Array<Int>.Type, is Array<Double>.Type, is Array<Float>.Type:
+            field = value as? N
         case is Dictionary<String, AnyObject>.Type:
+            field = value as? N
+        case is Dictionary<String, String>.Type, is Dictionary<String, Bool>.Type, is Dictionary<String, Int>.Type, is Dictionary<String, Double>.Type, is Dictionary<String, Float>.Type:
             field = value as? N
         case is NSDate.Type:
             field = value as? N
@@ -257,19 +253,15 @@ func fromJsonToPrimitiveType<N>(inout field: N?, value: AnyObject?) {
 func fromJsonToPrimitiveType<N>(inout field: N, value: AnyObject?) {
     if let value: AnyObject = value {
         switch N.self {
-        case is String.Type:
-            field = value as N
-        case is Bool.Type:
-            field = value as N
-        case is Int.Type:
-            field = value as N
-        case is Double.Type:
-            field = value as N
-        case is Float.Type:
+        case is String.Type, is Bool.Type, is Int.Type, is Double.Type, is Float.Type:
             field = value as N
         case is Array<AnyObject>.Type:
             field = value as N
+        case is Array<String>.Type, is Array<Bool>.Type, is Array<Int>.Type, is Array<Double>.Type, is Array<Float>.Type:
+            field = value as N
         case is Dictionary<String, AnyObject>.Type:
+            field = value as N
+        case is Dictionary<String, String>.Type, is Dictionary<String, Bool>.Type, is Dictionary<String, Int>.Type, is Dictionary<String, Double>.Type, is Dictionary<String, Float>.Type:
             field = value as N
         case is NSDate.Type:
             field = value as N
@@ -284,6 +276,7 @@ func fromJsonToObjectType<N: JSONSerializable>(inout field: N?, value: AnyObject
         field = JsonSZ().fromJSON(value, to: N.self)
     }
 }
+
 func fromJsonToObjectType<N: JSONSerializable>(inout field: N, value: AnyObject?) {
     if let value = value as? [String:  AnyObject] {
         field = JsonSZ().fromJSON(value, to: N.self)
@@ -300,6 +293,8 @@ func fromJsonToArrayType<N: JSONSerializable>(inout field: [N]?, value: AnyObjec
             var object = serializer.fromJSON(object as [String: AnyObject],  to: N.self)
             objects.append(object)
         }
+    } else {
+        println("NOT AnyObject]?")
     }
     
     field = objects.count > 0 ? objects: nil
@@ -315,6 +310,8 @@ func fromJsonToArrayType<N: JSONSerializable>(inout field: [N], value: AnyObject
             var object = serializer.fromJSON(object as [String: AnyObject],  to: N.self)
             objects.append(object)
         }
+    } else {
+        println("NOT AnyObject]?")
     }
     
     field = objects
@@ -363,6 +360,26 @@ func toJsonFromPrimitiveType<N>(field: N?, key: String, inout dictionary: [Strin
             dictionary[key] = field as Float
         case is String.Type:
             dictionary[key] = field as String
+        case is Array<Bool>.Type:
+            dictionary[key] = field as Array<Bool>
+        case is Array<Int>.Type:
+            dictionary[key] = field as Array<Int>
+        case is Array<Double>.Type:
+            dictionary[key] = field as Array<Double>
+        case is Array<Float>.Type:
+            dictionary[key] = field as Array<Float>
+        case is Array<String>.Type:
+            dictionary[key] = field as Array<String>
+        case is Dictionary<String, Bool>.Type:
+            dictionary[key] = field as Dictionary<String,Bool>
+        case is Dictionary<String, Bool>.Type:
+            dictionary[key] = field as Dictionary<String,Int>
+        case is Dictionary<String, Bool>.Type:
+            dictionary[key] = field as Dictionary<String,Double>
+        case is Dictionary<String, Bool>.Type:
+            dictionary[key] = field as Dictionary<String,Float>
+        case is Dictionary<String, String>.Type:
+            dictionary[key] = field as Dictionary<String,String>
         default:
             return
         }

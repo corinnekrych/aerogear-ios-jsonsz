@@ -415,3 +415,6 @@ func toJsonFromDictionaryType(field: [String: AnyObject]?, key: String, inout di
     }
 }
 
+func toJsonFromDictionaryType(field: [String: AnyObject], key: String, inout dictionary: [String : AnyObject]) {
+        dictionary[key] = NSDictionary(dictionary: field)
+}

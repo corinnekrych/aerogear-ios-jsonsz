@@ -76,34 +76,24 @@ class Team: JSONSerializable {
     }
 }
 
-
+/**
+A class to test non-optional object model
+*/
 class Developer: JSONSerializable {
-    var id: Int
-    var firstname: String
-    var lastname: String
-    var title: String
-    var age: Double
-    var committer: Bool
-    var weight: Float
-    var githubReposList:[AnyObject]
-    var dictionary:[String: AnyObject]
+    // put some defaults to satisfy swift object construction (not used)
+    var id: Int = 0
+    var firstname: String = ""
+    var lastname: String = ""
+    var title: String = ""
+    var age: Double = 0
+    var committer: Bool = false
+    var weight: Float = 0
+    var githubReposList:[AnyObject] = []
+    var dictionary:[String: AnyObject] = [:]
     
-    var address: Address
+    var address: Address = Address()
     
-    required init() {
-        // put some defaults to satisfy swift object construction (not used)
-        id = 0
-        firstname = ""
-        lastname = ""
-        title = ""
-        age = 0
-        committer = false
-        weight = 0
-        githubReposList = ["null", "null"]
-        dictionary = ["null" : "null"]
-        let addr = Address()
-        address = addr
-    }
+    required init() {}
     
     class func map(source: JsonSZ, object: Developer) {
         object.id <= source["id"]

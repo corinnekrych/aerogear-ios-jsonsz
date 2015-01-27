@@ -371,15 +371,15 @@ func toJsonFromPrimitiveType<N>(field: N?, key: String, inout dictionary: [Strin
         case is Array<String>.Type:
             dictionary[key] = field as Array<String>
         case is Dictionary<String, Bool>.Type:
-            dictionary[key] = field as Dictionary<String,Bool>
-        case is Dictionary<String, Bool>.Type:
-            dictionary[key] = field as Dictionary<String,Int>
-        case is Dictionary<String, Bool>.Type:
-            dictionary[key] = field as Dictionary<String,Double>
-        case is Dictionary<String, Bool>.Type:
-            dictionary[key] = field as Dictionary<String,Float>
+            dictionary[key] = field as Dictionary<String, Bool>
+        case is Dictionary<String, Int>.Type:
+            dictionary[key] = field as Dictionary<String, Int>
+        case is Dictionary<String, Double>.Type:
+            dictionary[key] = field as Dictionary<String, Double>
+        case is Dictionary<String, Float>.Type:
+            dictionary[key] = field as Dictionary<String, Float>
         case is Dictionary<String, String>.Type:
-            dictionary[key] = field as Dictionary<String,String>
+            dictionary[key] = field as Dictionary<String, String>
         default:
             return
         }

@@ -52,10 +52,17 @@ class AeroGearJsonSZTests: XCTestCase {
         object.dictStringInt = ["string": 1]
         object.dictStringDouble = ["string": 1.2]
         object.dictStringFloat = ["string": 1.3]
-        //var json = ["dictStringString":["string": "string"], "dictStringBool":["string": false], "dictStringInt":["string": 1], "dictStringDouble":["string": 1.1], "dictStringFloat":["string": 1.2]]
+
         let json = self.serializer.toJSON(object)
-        println(":::\(json)")
+
         XCTAssertTrue((json["dictStringString"] as [String:String]).count == 1)
+        XCTAssertTrue((json["dictStringBool"] as [String:Bool]).count == 1)
+        XCTAssertTrue((json["dictStringInt"] as [String:Int]).count == 1)
+        XCTAssertTrue((json["dictStringDouble"] as [String:Double]).count == 1)
+        XCTAssertTrue((json["dictStringFloat"] as [String:Float]).count == 1)
+        let dict:[String: String] = json["dictStringString"] as [String:String]
+        let value = dict["string"]! as String
+        XCTAssertTrue(value == "string")
     }
     
     func testJsonToObjectModelOptionalArrayOfPrimitives() {

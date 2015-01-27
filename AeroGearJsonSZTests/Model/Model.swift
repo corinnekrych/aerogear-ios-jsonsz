@@ -21,7 +21,7 @@ class Address: JSONSerializable {
 
     var street: String = ""
     var poBox: Int?
-    var city: String?
+    var city: String!
     var country: String?
     
     required init() {}

@@ -269,7 +269,6 @@ class AeroGearJsonSZTests: XCTestCase {
         XCTAssertTrue(json["committer"] as Bool == true)
         XCTAssertTrue(json["weight"] as Float == 60.2)
         XCTAssertTrue((json["githubReposList"] as [String]).count == 2)
-        XCTAssertTrue((json["githubReposList"] as [String]).count == 2)
         XCTAssertTrue((json["dictionary"] as [String:String]).count == 1)
     }    
 }

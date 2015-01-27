@@ -293,10 +293,7 @@ func fromJsonToArrayType<N: JSONSerializable>(inout field: [N]?, value: AnyObjec
             var object = serializer.fromJSON(object as [String: AnyObject],  to: N.self)
             objects.append(object)
         }
-    } else {
-        println("NOT AnyObject]?")
     }
-    
     field = objects.count > 0 ? objects: nil
 }
 
@@ -310,10 +307,7 @@ func fromJsonToArrayType<N: JSONSerializable>(inout field: [N], value: AnyObject
             var object = serializer.fromJSON(object as [String: AnyObject],  to: N.self)
             objects.append(object)
         }
-    } else {
-        println("NOT AnyObject]?")
     }
-    
     field = objects
 }
 

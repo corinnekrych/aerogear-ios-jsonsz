@@ -394,7 +394,9 @@ class AeroGearJsonSZTests: XCTestCase {
         XCTAssertTrue(json["age"] as Double == 40)
         XCTAssertTrue(json["committer"] as Bool == true)
         XCTAssertTrue(json["weight"] as Float == 60.2)
-        XCTAssertTrue((json["githubReposList"] as [String]).count == 2)
-        XCTAssertTrue((json["dictionary"] as [String:String]).count == 1)
+        let github = json["githubReposList"] as [String]
+        XCTAssertTrue(github.count == 2)
+        let dictValue = json["dictionary"] as [String:String]
+        XCTAssertTrue(dictValue.count == 1)
     }    
 }

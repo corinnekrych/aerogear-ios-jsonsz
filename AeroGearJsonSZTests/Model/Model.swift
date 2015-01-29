@@ -18,7 +18,7 @@
 import AeroGearJsonSZ
 
 class Address: JSONSerializable {
-
+    
     var street: String?
     var poBox: Int?
     var city: String?
@@ -45,7 +45,6 @@ class Contributor: JSONSerializable {
     var weight: Float?
     var githubReposList:[AnyObject]?
     var dictionary:[String: AnyObject]?
-    
     var address: Address?
     
     required init() {}
@@ -75,3 +74,91 @@ class Team: JSONSerializable {
         object.contributors <= source["contributors"]
     }
 }
+
+class TestCollectionOfPrimitives : JSONSerializable {
+    var dictStringString: [String: String]?
+    var dictStringInt: [String: Int]?
+    var dictStringBool: [String: Bool]?
+    var dictStringDouble: [String: Double]?
+    var dictStringFloat: [String: Float]?
+    var arrayString: [String]?
+    var arrayInt: [Int]?
+    var arrayBool: [Bool]?
+    var arrayDouble: [Double]?
+    var arrayFloat: [Float]?
+    required init() {}
+    
+    class func map(source: JsonSZ, object: TestCollectionOfPrimitives) {
+        object.dictStringString <= source["dictStringString"]
+        object.dictStringBool <= source["dictStringBool"]
+        object.dictStringInt <= source["dictStringInt"]
+        object.dictStringDouble <= source["dictStringDouble"]
+        object.dictStringFloat <= source["dictStringFloat"]
+        object.arrayString <= source["arrayString"]
+        object.arrayInt <= source["arrayInt"]
+        object.arrayBool <= source["arrayBool"]
+        object.arrayDouble <= source["arrayDouble"]
+        object.arrayFloat <= source["arrayFloat"]
+    }
+}
+
+class TestCollectionOfPrimitivesNonOptional : JSONSerializable {
+    var dictStringString: [String: String] = [:]
+    var dictStringInt: [String: Int] = [:]
+    var dictStringBool: [String: Bool] = [:]
+    var dictStringDouble: [String: Double] = [:]
+    var dictStringFloat: [String: Float] = [:]
+    var arrayString: [String] = []
+    var arrayInt: [Int] = []
+    var arrayBool: [Bool] = []
+    var arrayDouble: [Double] = []
+    var arrayFloat: [Float] = []
+    
+    required init() {}
+    
+    class func map(source: JsonSZ, object: TestCollectionOfPrimitivesNonOptional) {
+        object.dictStringString <= source["dictStringString"]
+        object.dictStringBool <= source["dictStringBool"]
+        object.dictStringInt <= source["dictStringInt"]
+        object.dictStringDouble <= source["dictStringDouble"]
+        object.dictStringFloat <= source["dictStringFloat"]
+        object.arrayString <= source["arrayString"]
+        object.arrayInt <= source["arrayInt"]
+        object.arrayBool <= source["arrayBool"]
+        object.arrayDouble <= source["arrayDouble"]
+        object.arrayFloat <= source["arrayFloat"]
+    }
+}
+/**
+A class to test non-optional object model
+*/
+class Developer: JSONSerializable {
+    // put some defaults to satisfy swift object construction (not used)
+    var id: Int = 0
+    var firstname: String = ""
+    var lastname: String = ""
+    var title: String = ""
+    var age: Double = 0
+    var committer: Bool = false
+    var weight: Float = 0
+    var githubReposList:[AnyObject] = []
+    var dictionary:[String: AnyObject] = [:]
+    
+    var address: Address = Address()
+    
+    required init() {}
+    
+    class func map(source: JsonSZ, object: Developer) {
+        object.id <= source["id"]
+        object.firstname <= source["firstname"]
+        object.lastname <= source["lastname"]
+        object.title <= source["title"]
+        object.age <= source["age"]
+        object.committer <= source["committer"]
+        object.weight <= source["weight"]
+        object.githubReposList <= source["githubReposList"]
+        object.dictionary <= source["dictionary"]
+        object.address <= source["address"]
+    }
+}
+

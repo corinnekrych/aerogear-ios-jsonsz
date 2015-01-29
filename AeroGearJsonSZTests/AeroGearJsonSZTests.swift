@@ -33,7 +33,7 @@ class AeroGearJsonSZTests: XCTestCase {
         super.tearDown()
     }
     
-    func testJsonToObjectModelOptionalDictionnaryOfPrimitives() {
+    func testJsonToObjectModelOptionalDictionaryOfPrimitives() {
         var json = ["dictStringString":["string": "string"], "dictStringBool":["string": false], "dictStringInt":["string": 1], "dictStringDouble":["string": 1.1], "dictStringFloat":["string": 1.2]]
         // serialize from json
         let testSet: TestCollectionOfPrimitives = self.serializer.fromJSON(json, to: TestCollectionOfPrimitives.self)
@@ -45,7 +45,7 @@ class AeroGearJsonSZTests: XCTestCase {
         XCTAssertTrue(testSet.dictStringFloat?.count == 1)
     }
     
-    func testObjectToModelOptionalDictionnaryOfPrimitives() {
+    func testObjectToModelOptionalDictionaryOfPrimitives() {
         var object = TestCollectionOfPrimitives()
         object.dictStringString = ["string": "string"]
         object.dictStringBool = ["string": false]
@@ -96,7 +96,7 @@ class AeroGearJsonSZTests: XCTestCase {
         XCTAssertTrue(dict[0] == "string")
     }
     
-    func testJsonToObjectModelNonOptionalDictionnaryOfPrimitives() {
+    func testJsonToObjectModelNonOptionalDictionaryOfPrimitives() {
         var json = ["dictStringString":["string": "string"], "dictStringBool":["string": false], "dictStringInt":["string": 1], "dictStringDouble":["string": 1.1], "dictStringFloat":["string": 1.2]]
         // serialize from json
         let testSet: TestCollectionOfPrimitivesNonOptional = self.serializer.fromJSON(json, to: TestCollectionOfPrimitivesNonOptional.self)
@@ -108,7 +108,7 @@ class AeroGearJsonSZTests: XCTestCase {
         XCTAssertTrue(testSet.dictStringFloat.count == 1)
     }
     
-    func testObjectToModelNonOptionalDictionnaryOfPrimitives() {
+    func testObjectToModelNonOptionalDictionaryOfPrimitives() {
         var object = TestCollectionOfPrimitivesNonOptional()
         object.dictStringString = ["string": "string"]
         object.dictStringBool = ["string": false]

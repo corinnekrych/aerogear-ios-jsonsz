@@ -365,7 +365,7 @@ class AeroGearJsonSZTests: XCTestCase {
         XCTAssertTrue(developer.title == "Software Engineer")
         XCTAssertTrue(developer.age == 40)
         XCTAssertTrue(developer.committer == true)
-        XCTAssertTrue(developer.weight ==     60.2)
+        XCTAssertTrue(developer.weight == 60.2)
         XCTAssertTrue(developer.githubReposList.count == 2)
         XCTAssertTrue(developer.dictionary.count == 1)
     }
@@ -387,14 +387,23 @@ class AeroGearJsonSZTests: XCTestCase {
         let json = self.serializer.toJSON(developer)
         
         // assert json dictionary has been populated
-        XCTAssertTrue(json["id"] as Int == 100)
-        XCTAssertTrue(json["firstname"] as String == "John")
-        XCTAssertTrue(json["lastname"] as String == "Doe")
-        XCTAssertTrue(json["title"] as String == "Software Engineer")
-        XCTAssertTrue(json["age"] as Double == 40)
-        XCTAssertTrue(json["committer"] as Bool == true)
-        XCTAssertTrue(json["weight"] as Float == 60.2)
-        XCTAssertTrue((json["githubReposList"] as [String]).count == 2)
-        XCTAssertTrue((json["dictionary"] as [String:String]).count == 1)
+        let id = json["id"] as Int
+        XCTAssertTrue(id == 100)
+        let firstname = json["firstname"] as String
+        XCTAssertTrue(firstname == "John")
+        let lastname = json["lastname"] as String
+        XCTAssertTrue(lastname == "Doe")
+        let title = json["title"] as String
+        XCTAssertTrue(title == "Software Engineer")
+        let age = json["age"] as Double
+        XCTAssertTrue(age == 40)
+        let isCommitter = json["committer"] as Bool
+        XCTAssertTrue(isCommitter == true)
+        let weight = json["weight"] as Float
+        XCTAssertTrue(weight == 60.2)
+        let github = json["githubReposList"] as [String]
+        XCTAssertTrue(github.count == 2)
+        let dictValue = json["dictionary"] as [String:String]
+        XCTAssertTrue(dictValue.count == 1)
     }    
 }

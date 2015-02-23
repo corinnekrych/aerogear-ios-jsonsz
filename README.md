@@ -1,5 +1,7 @@
 # aerogear-ios-jsonsz [![Build Status](https://travis-ci.org/aerogear/aerogear-ios-jsonsz.png)](https://travis-ci.org/aerogear/aerogear-ios-jsonsz)
 
+> **NOTE:**  The library has been tested with Xcode 6.1.1
+
 Serialize 'Swift' objects back-forth from their JSON representation the 'easy way'.
 
 Here is a typical example usage:

@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode611
+osx_image: xcode63
 xcode_project: AeroGearJsonSZ.xcodeproj
 xcode_scheme: AeroGearJsonSZ
 xcode_sdk: iphonesimulator

@@ -34,7 +34,7 @@ class AeroGearJsonSZTests: XCTestCase {
     }
     
     func testJsonToObjectModelOptionalDictionaryOfPrimitives() {
-        var json = ["dictStringString":["string": "string"], "dictStringBool":["string": false], "dictStringInt":["string": 1], "dictStringDouble":["string": 1.1], "dictStringFloat":["string": 1.2]]
+        var json = ["dictStringString":["string": "string"], "dictStringBool":["string": false], "dictStringInt":["string": 1], "dictStringDouble":["string": Double(1.1)], "dictStringFloat":["string": Float(1.2)]] as NSDictionary
         // serialize from json
         let testSet: TestCollectionOfPrimitives = self.serializer.fromJSON(json, to: TestCollectionOfPrimitives.self)
 
@@ -55,18 +55,18 @@ class AeroGearJsonSZTests: XCTestCase {
 
         let json = self.serializer.toJSON(object)
 
-        XCTAssertTrue((json["dictStringString"] as [String:String]).count == 1)
-        XCTAssertTrue((json["dictStringBool"] as [String:Bool]).count == 1)
-        XCTAssertTrue((json["dictStringInt"] as [String:Int]).count == 1)
-        XCTAssertTrue((json["dictStringDouble"] as [String:Double]).count == 1)
-        XCTAssertTrue((json["dictStringFloat"] as [String:Float]).count == 1)
-        let dict:[String: String] = json["dictStringString"] as [String:String]
+        XCTAssertTrue((json["dictStringString"] as! [String:String]).count == 1)
+        XCTAssertTrue((json["dictStringBool"] as! [String:Bool]).count == 1)
+        XCTAssertTrue((json["dictStringInt"] as! [String:Int]).count == 1)
+        XCTAssertTrue((json["dictStringDouble"] as! [String:Double]).count == 1)
+        XCTAssertTrue((json["dictStringFloat"] as! [String:Float]).count == 1)
+        let dict:[String: String] = json["dictStringString"] as! [String:String]
         let value = dict["string"]! as String
         XCTAssertTrue(value == "string")
     }
     
     func testJsonToObjectModelOptionalArrayOfPrimitives() {
-        var json = ["arrayString":["string", "string"], "arrayBool":[true, false], "arrayInt":[1, 2], "arrayDouble":[1.1, 1.2], "arrayFloat":[1.2, 1.3]]
+        var json = ["arrayString":["string", "string"], "arrayBool":[true, false], "arrayInt":[Int(1), Int(2)], "arrayDouble":[Double(1.1), Double(1.2)], "arrayFloat":[Float(1.2), Float(1.3)]]
         // serialize from json
         let testSet: TestCollectionOfPrimitives = self.serializer.fromJSON(json, to: TestCollectionOfPrimitives.self)
 
@@ -87,17 +87,17 @@ class AeroGearJsonSZTests: XCTestCase {
         
         let json = self.serializer.toJSON(object)
         
-        XCTAssertTrue((json["arrayString"] as [String]).count == 1)
-        XCTAssertTrue((json["arrayBool"] as [Bool]).count == 1)
-        XCTAssertTrue((json["arrayInt"] as [Int]).count == 1)
-        XCTAssertTrue((json["arrayDouble"] as [Double]).count == 1)
-        XCTAssertTrue((json["arrayFloat"] as [Float]).count == 1)
-        let dict:[String] = json["arrayString"] as [String]
+        XCTAssertTrue((json["arrayString"] as! [String]).count == 1)
+        XCTAssertTrue((json["arrayBool"] as! [Bool]).count == 1)
+        XCTAssertTrue((json["arrayInt"] as! [Int]).count == 1)
+        XCTAssertTrue((json["arrayDouble"] as! [Double]).count == 1)
+        XCTAssertTrue((json["arrayFloat"] as! [Float]).count == 1)
+        let dict:[String] = json["arrayString"] as! [String]
         XCTAssertTrue(dict[0] == "string")
     }
     
     func testJsonToObjectModelNonOptionalDictionaryOfPrimitives() {
-        var json = ["dictStringString":["string": "string"], "dictStringBool":["string": false], "dictStringInt":["string": 1], "dictStringDouble":["string": 1.1], "dictStringFloat":["string": 1.2]]
+        var json = ["dictStringString":["string": "string"], "dictStringBool":["string": false], "dictStringInt":["string": Int(1)], "dictStringDouble":["string": Double(1.1)], "dictStringFloat":["string": Float(1.2)]] as NSDictionary
         // serialize from json
         let testSet: TestCollectionOfPrimitivesNonOptional = self.serializer.fromJSON(json, to: TestCollectionOfPrimitivesNonOptional.self)
         
@@ -118,18 +118,18 @@ class AeroGearJsonSZTests: XCTestCase {
         
         let json = self.serializer.toJSON(object)
         
-        XCTAssertTrue((json["dictStringString"] as [String:String]).count == 1)
-        XCTAssertTrue((json["dictStringBool"] as [String:Bool]).count == 1)
-        XCTAssertTrue((json["dictStringInt"] as [String:Int]).count == 1)
-        XCTAssertTrue((json["dictStringDouble"] as [String:Double]).count == 1)
-        XCTAssertTrue((json["dictStringFloat"] as [String:Float]).count == 1)
-        let dict:[String: String] = json["dictStringString"] as [String:String]
+        XCTAssertTrue((json["dictStringString"] as! [String:String]).count == 1)
+        XCTAssertTrue((json["dictStringBool"] as! [String:Bool]).count == 1)
+        XCTAssertTrue((json["dictStringInt"] as! [String:Int]).count == 1)
+        XCTAssertTrue((json["dictStringDouble"] as! [String:Double]).count == 1)
+        XCTAssertTrue((json["dictStringFloat"] as! [String:Float]).count == 1)
+        let dict:[String: String] = json["dictStringString"] as! [String:String]
         let value = dict["string"]! as String
         XCTAssertTrue(value == "string")
     }
     
     func testJsonToObjectModelNonOptionalArrayOfPrimitives() {
-        var json = ["arrayString":["string", "string"], "arrayBool":[true, false], "arrayInt":[1, 2], "arrayDouble":[1.1, 1.2], "arrayFloat":[1.2, 1.3]]
+        var json = ["arrayString":["string", "string"], "arrayBool":[true, false], "arrayInt":[1, 2], "arrayDouble":[1.1, 1.2], "arrayFloat":[1.2, 1.3]] as NSDictionary
         // serialize from json
         let testSet: TestCollectionOfPrimitivesNonOptional = self.serializer.fromJSON(json, to: TestCollectionOfPrimitivesNonOptional.self)
         
@@ -150,12 +150,12 @@ class AeroGearJsonSZTests: XCTestCase {
         
         let json = self.serializer.toJSON(object)
         
-        XCTAssertTrue((json["arrayString"] as [String]).count == 1)
-        XCTAssertTrue((json["arrayBool"] as [Bool]).count == 1)
-        XCTAssertTrue((json["arrayInt"] as [Int]).count == 1)
-        XCTAssertTrue((json["arrayDouble"] as [Double]).count == 1)
-        XCTAssertTrue((json["arrayFloat"] as [Float]).count == 1)
-        let dict:[String] = json["arrayString"] as [String]
+        XCTAssertTrue((json["arrayString"] as! [String]).count == 1)
+        XCTAssertTrue((json["arrayBool"] as! [Bool]).count == 1)
+        XCTAssertTrue((json["arrayInt"] as! [Int]).count == 1)
+        XCTAssertTrue((json["arrayDouble"] as! [Double]).count == 1)
+        XCTAssertTrue((json["arrayFloat"] as! [Float]).count == 1)
+        let dict:[String] = json["arrayString"] as! [String]
         XCTAssertTrue(dict[0] == "string")
     }
 
@@ -195,16 +195,16 @@ class AeroGearJsonSZTests: XCTestCase {
         let json = self.serializer.toJSON(contributor)
         
         // assert json dictionary has been populated
-        XCTAssertTrue(json["id"] as Int == 100)
-        XCTAssertTrue(json["firstname"] as String == "John")
-        XCTAssertTrue(json["lastname"] as String == "Doe")
-        XCTAssertTrue(json["title"] as String == "Software Engineer")
-        XCTAssertTrue(json["age"] as Double == 40)
-        XCTAssertTrue(json["committer"] as Bool == true)
-        XCTAssertTrue(json["weight"] as Float == 60.2)
-        XCTAssertTrue((json["githubReposList"] as [String]).count == 2)
-        XCTAssertTrue((json["githubReposList"] as [String]).count == 2)
-        XCTAssertTrue((json["dictionary"] as [String:String]).count == 1)
+        XCTAssertTrue(json["id"] as! Int == 100)
+        XCTAssertTrue(json["firstname"] as! String == "John")
+        XCTAssertTrue(json["lastname"] as! String == "Doe")
+        XCTAssertTrue(json["title"] as! String == "Software Engineer")
+        XCTAssertTrue(json["age"] as! Double == 40)
+        XCTAssertTrue(json["committer"] as! Bool == true)
+        XCTAssertTrue(json["weight"] as! Float == 60.2)
+        XCTAssertTrue((json["githubReposList"] as! [String]).count == 2)
+        XCTAssertTrue((json["githubReposList"] as! [String]).count == 2)
+        XCTAssertTrue((json["dictionary"] as! [String:String]).count == 1)
     }
     
     func testJSONToObjectModelWithPrimitiveAttributesAndMissingValues() {
@@ -274,13 +274,13 @@ class AeroGearJsonSZTests: XCTestCase {
         let json = self.serializer.toJSON(contributor)
         
         // assert construction has succeeded
-        XCTAssertTrue(json["firstname"] as String == "John")
+        XCTAssertTrue(json["firstname"] as! String == "John")
         // asssert relationship has succeeded
-        let addressJSON = json["address"] as [String: AnyObject]
-        XCTAssertTrue(addressJSON["street"] as String == "Buchanan Street")
-        XCTAssertTrue(addressJSON["poBox"] as Int == 123)
-        XCTAssertTrue(addressJSON["city"] as String == "Glasgow")
-        XCTAssertTrue(addressJSON["country"] as String == "UK")
+        let addressJSON = json["address"] as! [String: AnyObject]
+        XCTAssertTrue(addressJSON["street"] as! String == "Buchanan Street")
+        XCTAssertTrue(addressJSON["poBox"] as! Int == 123)
+        XCTAssertTrue(addressJSON["city"] as! String == "Glasgow")
+        XCTAssertTrue(addressJSON["country"] as! String == "UK")
     }
     
     func testOneToManyRelationshipFromJSON() {
@@ -327,17 +327,17 @@ class AeroGearJsonSZTests: XCTestCase {
         let json = self.serializer.toJSON(team)
         
         // assert construction has succeeded
-        XCTAssertTrue(json["name"] as String == "AeroGear")
+        XCTAssertTrue(json["name"] as! String == "AeroGear")
         // asssert relationship has succeeded
-        let contributorsJSON = json["contributors"] as [[String: AnyObject]]
+        let contributorsJSON = json["contributors"] as! [[String: AnyObject]]
         
         let contributorAJSON = contributorsJSON[0] as [String: AnyObject]
-        XCTAssertTrue(contributorAJSON["id"] as Int == 100)
-        XCTAssertTrue(contributorAJSON["firstname"] as String == "John")
+        XCTAssertTrue(contributorAJSON["id"] as! Int == 100)
+        XCTAssertTrue(contributorAJSON["firstname"] as! String == "John")
         
         let contributorBJSON = contributorsJSON[1] as [String: AnyObject]
-        XCTAssertTrue(contributorBJSON["id"] as Int == 101)
-        XCTAssertTrue(contributorBJSON["firstname"] as String == "Maria")
+        XCTAssertTrue(contributorBJSON["id"] as! Int == 101)
+        XCTAssertTrue(contributorBJSON["firstname"] as! String == "Maria")
     }
     
     func testMapArrayJSON(){
@@ -387,23 +387,23 @@ class AeroGearJsonSZTests: XCTestCase {
         let json = self.serializer.toJSON(developer)
         
         // assert json dictionary has been populated
-        let id = json["id"] as Int
+        let id = json["id"] as! Int
         XCTAssertTrue(id == 100)
-        let firstname = json["firstname"] as String
+        let firstname = json["firstname"] as! String
         XCTAssertTrue(firstname == "John")
-        let lastname = json["lastname"] as String
+        let lastname = json["lastname"] as! String
         XCTAssertTrue(lastname == "Doe")
-        let title = json["title"] as String
+        let title = json["title"] as! String
         XCTAssertTrue(title == "Software Engineer")
-        let age = json["age"] as Double
+        let age = json["age"] as! Double
         XCTAssertTrue(age == 40)
-        let isCommitter = json["committer"] as Bool
+        let isCommitter = json["committer"] as! Bool
         XCTAssertTrue(isCommitter == true)
-        let weight = json["weight"] as Float
+        let weight = json["weight"] as! Float
         XCTAssertTrue(weight == 60.2)
-        let github = json["githubReposList"] as [String]
+        let github = json["githubReposList"] as! [String]
         XCTAssertTrue(github.count == 2)
-        let dictValue = json["dictionary"] as [String:String]
+        let dictValue = json["dictionary"] as! [String:String]
         XCTAssertTrue(dictValue.count == 1)
     }    
 }

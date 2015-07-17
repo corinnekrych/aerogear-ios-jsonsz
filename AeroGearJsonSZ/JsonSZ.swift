@@ -97,12 +97,7 @@ public class JsonSZ {
     public func fromJSONArray<N: JSONSerializable>(JSON: AnyObject,  to type: N.Type) -> [N]? {
         if let _ = JSON as? String {
             if let data =  JSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true) {
-                let parsed: AnyObject?
-                do {
-                    parsed = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
-                } catch _ {
-                    parsed = nil
-                }
+                let parsed: AnyObject? =  try! NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
                 if let array = parsed as? [[String: AnyObject]] {
                     var objects: [N] = []
                     

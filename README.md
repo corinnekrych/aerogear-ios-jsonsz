@@ -1,6 +1,6 @@
 # aerogear-ios-jsonsz [![Build Status](https://travis-ci.org/aerogear/aerogear-ios-jsonsz.png)](https://travis-ci.org/aerogear/aerogear-ios-jsonsz)
 
-> **NOTE:**  The library has been tested with Xcode 6.3
+> This module currently build with Xcode 6.4 and supports iOS8.
 
 Serialize 'Swift' objects back-forth from their JSON representation the 'easy way'.
 

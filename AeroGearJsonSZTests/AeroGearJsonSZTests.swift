@@ -34,7 +34,7 @@ class AeroGearJsonSZTests: XCTestCase {
     }
     
     func testJsonToObjectModelOptionalDictionaryOfPrimitives() {
-        var json = ["dictStringString":["string": "string"], "dictStringBool":["string": false], "dictStringInt":["string": 1], "dictStringDouble":["string": Double(1.1)], "dictStringFloat":["string": Float(1.2)]] as NSDictionary
+        let json = ["dictStringString":["string": "string"], "dictStringBool":["string": false], "dictStringInt":["string": 1], "dictStringDouble":["string": Double(1.1)], "dictStringFloat":["string": Float(1.2)]] as NSDictionary
         // serialize from json
         let testSet: TestCollectionOfPrimitives = self.serializer.fromJSON(json, to: TestCollectionOfPrimitives.self)
 
@@ -46,7 +46,7 @@ class AeroGearJsonSZTests: XCTestCase {
     }
     
     func testObjectToModelOptionalDictionaryOfPrimitives() {
-        var object = TestCollectionOfPrimitives()
+        let object = TestCollectionOfPrimitives()
         object.dictStringString = ["string": "string"]
         object.dictStringBool = ["string": false]
         object.dictStringInt = ["string": 1]
@@ -66,7 +66,7 @@ class AeroGearJsonSZTests: XCTestCase {
     }
     
     func testJsonToObjectModelOptionalArrayOfPrimitives() {
-        var json = ["arrayString":["string", "string"], "arrayBool":[true, false], "arrayInt":[Int(1), Int(2)], "arrayDouble":[Double(1.1), Double(1.2)], "arrayFloat":[Float(1.2), Float(1.3)]]
+        let json = ["arrayString":["string", "string"], "arrayBool":[true, false], "arrayInt":[Int(1), Int(2)], "arrayDouble":[Double(1.1), Double(1.2)], "arrayFloat":[Float(1.2), Float(1.3)]]
         // serialize from json
         let testSet: TestCollectionOfPrimitives = self.serializer.fromJSON(json, to: TestCollectionOfPrimitives.self)
 
@@ -78,7 +78,7 @@ class AeroGearJsonSZTests: XCTestCase {
     }
     
     func testObjectToModelOptionalArrayOfPrimitives() {
-        var object = TestCollectionOfPrimitives()
+        let object = TestCollectionOfPrimitives()
         object.arrayString = ["string"]
         object.arrayBool = [false]
         object.arrayInt = [1]
@@ -97,7 +97,7 @@ class AeroGearJsonSZTests: XCTestCase {
     }
     
     func testJsonToObjectModelNonOptionalDictionaryOfPrimitives() {
-        var json = ["dictStringString":["string": "string"], "dictStringBool":["string": false], "dictStringInt":["string": Int(1)], "dictStringDouble":["string": Double(1.1)], "dictStringFloat":["string": Float(1.2)]] as NSDictionary
+        let json = ["dictStringString":["string": "string"], "dictStringBool":["string": false], "dictStringInt":["string": Int(1)], "dictStringDouble":["string": Double(1.1)], "dictStringFloat":["string": Float(1.2)]] as NSDictionary
         // serialize from json
         let testSet: TestCollectionOfPrimitivesNonOptional = self.serializer.fromJSON(json, to: TestCollectionOfPrimitivesNonOptional.self)
         
@@ -109,7 +109,7 @@ class AeroGearJsonSZTests: XCTestCase {
     }
     
     func testObjectToModelNonOptionalDictionaryOfPrimitives() {
-        var object = TestCollectionOfPrimitivesNonOptional()
+        let object = TestCollectionOfPrimitivesNonOptional()
         object.dictStringString = ["string": "string"]
         object.dictStringBool = ["string": false]
         object.dictStringInt = ["string": 1]
@@ -129,7 +129,7 @@ class AeroGearJsonSZTests: XCTestCase {
     }
     
     func testJsonToObjectModelNonOptionalArrayOfPrimitives() {
-        var json = ["arrayString":["string", "string"], "arrayBool":[true, false], "arrayInt":[1, 2], "arrayDouble":[1.1, 1.2], "arrayFloat":[1.2, 1.3]] as NSDictionary
+        let json = ["arrayString":["string", "string"], "arrayBool":[true, false], "arrayInt":[1, 2], "arrayDouble":[1.1, 1.2], "arrayFloat":[1.2, 1.3]] as NSDictionary
         // serialize from json
         let testSet: TestCollectionOfPrimitivesNonOptional = self.serializer.fromJSON(json, to: TestCollectionOfPrimitivesNonOptional.self)
         
@@ -141,7 +141,7 @@ class AeroGearJsonSZTests: XCTestCase {
     }
     
     func testObjectToModelNonOptionalArrayOfPrimitives() {
-        var object = TestCollectionOfPrimitivesNonOptional()
+        let object = TestCollectionOfPrimitivesNonOptional()
         object.arrayString = ["string"]
         object.arrayBool = [false]
         object.arrayInt = [1]
@@ -160,7 +160,7 @@ class AeroGearJsonSZTests: XCTestCase {
     }
 
     func testJSONToObjectModelWithPrimitiveAttributes() {
-        var contributorJSON = ["id": 100, "firstname": "John", "lastname": "Doe", "title": "Software Engineer", "age": 40, "committer": true, "weight": 60.2, "githubReposList":["foo", "bar"], "dictionary": ["foo": "bar"]]
+        let contributorJSON = ["id": 100, "firstname": "John", "lastname": "Doe", "title": "Software Engineer", "age": 40, "committer": true, "weight": 60.2, "githubReposList":["foo", "bar"], "dictionary": ["foo": "bar"]]
         
         // serialize from json
         let contributor:Contributor = self.serializer.fromJSON(contributorJSON, to: Contributor.self)
@@ -208,7 +208,7 @@ class AeroGearJsonSZTests: XCTestCase {
     }
     
     func testJSONToObjectModelWithPrimitiveAttributesAndMissingValues() {
-        var contributorJSON = ["id": 100, "title":  "Software Engineer"]
+        let contributorJSON = ["id": 100, "title":  "Software Engineer"]
         // serialize from json
         let contributor:Contributor = self.serializer.fromJSON(contributorJSON, to: Contributor.self)
         
@@ -242,8 +242,8 @@ class AeroGearJsonSZTests: XCTestCase {
     }
     
     func testOneToOneRelationshipFromJSON() {
-        var addressJSON = ["street": "Buchanan Street", "poBox": 123, "city": "Glasgow", "country": "UK"]
-        var contributorJSON = ["firstname": "John", "address": addressJSON]
+        let addressJSON = ["street": "Buchanan Street", "poBox": 123, "city": "Glasgow", "country": "UK"]
+        let contributorJSON = ["firstname": "John", "address": addressJSON]
         
         // serialize from json
         let contributor:Contributor = self.serializer.fromJSON(contributorJSON, to: Contributor.self)
@@ -285,10 +285,10 @@ class AeroGearJsonSZTests: XCTestCase {
     
     func testOneToManyRelationshipFromJSON() {
         // construct objects
-        var contributorAJSON = ["id": 100, "firstname": "John"]
-        var contributorBJSON = ["id": 101, "firstname": "Maria"]
+        let contributorAJSON = ["id": 100, "firstname": "John"]
+        let contributorBJSON = ["id": 101, "firstname": "Maria"]
         
-        var teamJSON = ["name": "AeroGear", "contributors": [contributorAJSON, contributorBJSON]]
+        let teamJSON = ["name": "AeroGear", "contributors": [contributorAJSON, contributorBJSON]]
         
         // serialize from json
         let team:Team = self.serializer.fromJSON(teamJSON, to: Team.self)
@@ -353,7 +353,7 @@ class AeroGearJsonSZTests: XCTestCase {
     }
     
     func testJSONToObjectModelWithPrimitiveAttributesWithoutOptionals() {
-        var developerJSON = ["id": 100, "firstname": "John", "lastname": "Doe", "title": "Software Engineer", "age": 40, "committer": true, "weight": 60.2, "githubReposList":["foo", "bar"], "dictionary": ["foo": "bar"]]
+        let developerJSON = ["id": 100, "firstname": "John", "lastname": "Doe", "title": "Software Engineer", "age": 40, "committer": true, "weight": 60.2, "githubReposList":["foo", "bar"], "dictionary": ["foo": "bar"]]
         
         // serialize from json
         let developer:Developer = self.serializer.fromJSON(developerJSON, to: Developer.self)

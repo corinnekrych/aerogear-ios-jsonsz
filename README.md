@@ -1,6 +1,6 @@
 # aerogear-ios-jsonsz [![Build Status](https://travis-ci.org/aerogear/aerogear-ios-jsonsz.png)](https://travis-ci.org/aerogear/aerogear-ios-jsonsz)
 
-> This module currently build with Xcode 7 and supports iOS7, iOS8, iOS9.
+> This module currently build with Xcode 7 and supports iOS7 [1], iOS8, iOS9.
 
 Serialize 'Swift' objects back-forth from their JSON representation the 'easy way'.
 
@@ -13,6 +13,7 @@ Serialize 'Swift' objects back-forth from their JSON representation the 'easy wa
 | Mailing lists:  | [aerogear-users](http://aerogear-users.1116366.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-users))  |
 |                 | [aerogear-dev](http://aerogear-dev.1069024.n5.nabble.com/) ([subscribe](https://lists.jboss.org/mailman/listinfo/aerogear-dev))  |
 
+**Note [1]**: Cocoapod central repo supports dynamic library from iOS8+. If you want to deploy on iOS7, use areoger-ios-http fom master source with its podspec pointing to iOS7.
 
 ## Example usage
 Here is a typical example usage:
